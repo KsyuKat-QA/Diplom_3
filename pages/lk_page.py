@@ -1,5 +1,6 @@
 from pages.base_page import BasePage
 from data import *
+from urls import *
 from locators.lk_page_locators import LkPageLocators
 import allure
 
@@ -25,3 +26,15 @@ class LkPage(BasePage):
     @allure.step('Выходим из ЛК')
     def exit_lk(self):
         self.click_elem_with_wait(LkPageLocators.BUT_EXIT)
+
+    @allure.step('Ждем скрытия надписи "загрузка"')
+    def wait_load(self):
+        self.wait_elem_hide(LkPageLocators.LOADING)
+
+    @allure.step('Сравниваем текущую ссылку и передаваемую')
+    def url_check(self, url):
+        return self.get_cur_url() == url
+
+    @allure.step('Ждем на главной кнопки для восстановления')
+    def wait_but_recover(self):
+        self.find_elem_with_wait(LkPageLocators.BUT_RECOVER)

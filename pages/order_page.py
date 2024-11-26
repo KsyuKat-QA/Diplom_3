@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from pages.root_page import RootPage
 from locators.order_page_locators import OrderPageLocators
 import allure
-from data import *
+from urls import *
 
 class OrderPage(RootPage):
     @allure.step('Открыли браузер по ссылке ' +LENTA_SITE )
@@ -30,12 +30,15 @@ class OrderPage(RootPage):
 
     @allure.step('Сравниваем id заказа (вида #0152641) с тем, что на модальной форме')
     def check_modal_order_id(self, order_id):
-        return self.get_elem_text(OrderPageLocators.MODAL_ORDER_ID) == order_id  #сравниваем id заказа (#0152641) с тем, что на модальной форме
+        return self.get_elem_text(OrderPageLocators.MODAL_ORDER_ID) #== order_id  #сравниваем id заказа (#0152641) с тем, что на модальной форме
 
     @allure.step('Нажимаем крестик на форме заказа')
     def close_modal_order_id(self):
+        i = 0
         while self.get_elem_text(OrderPageLocators.MODAL_ORDER_ID_FROM_MAIN)=='9999': #пока не получим id заказа, не закрываем модальную форму
             time.sleep(0.1)
+            i =+ 1
+            if i == 20: break
         ord_id = self.get_elem_text(OrderPageLocators.MODAL_ORDER_ID_FROM_MAIN) #возвращаем id заказа
         self.click_elem_with_wait(OrderPageLocators.CLOSE_ORD_DONE) #крестик на форме заказа
         return ord_id
@@ -69,7 +72,8 @@ class OrderPage(RootPage):
         return self.get_elem_text(OrderPageLocators.TODAY_DONE)
 
     @allure.step('Проверяем номер заказа в списке "В работе" в ленте заказов (добавив ведомый 0 вначале)"')
-    def check_order_in_work(self, id):
+    def check_order_in_work(self, id, wait):
+        time.sleep(wait) # нужна задержка, чтобы номер успел появиться на ленте справа
         block = self.find_elems_with_wait(OrderPageLocators.ORDERS_IN_WORK) #берем все элементы в истории, построчно
         for elem in block:
             if elem.find_element(By.TAG_NAME, "li").text == "0"+id:

@@ -57,4 +57,4 @@ def test_new_order_counter(browser, ingdr_pos):
     testing_page.lenta_click()
     assert total_cnt_before < int(testing_page.get_total_orders_done()) #после формирования заказа, прошлое число стало строго меньше
     assert today_cnt_before < int(testing_page.get_today_orders_done()) #после формирования заказа, прошлое число стало строго меньше
-    assert testing_page.check_order_in_work(order_id)  #номер заказа появился в списке "в работе"
+    assert testing_page.check_order_in_work(order_id, 2)  #номер заказа появился в списке "в работе"

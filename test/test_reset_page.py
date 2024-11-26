@@ -1,7 +1,6 @@
-from locators.reset_page_locators import ResetPageLocators
 from pages.reset_page import ResetPage
 from conftest import browser
-from data import *
+from urls import *
 import pytest
 import allure
 
@@ -19,4 +18,4 @@ def test_reset_pass(browser,mail):
     testing_page.fill_mail(mail)
     testing_page.but_recover_final_click()
     testing_page.show_pass()
-    assert testing_page.check_active_element(ResetPageLocators.PASS_INPUT) #Сравниваем активный элемент с формой ввода пароля
+    assert testing_page.check_active_pass_input() #Сравниваем активный элемент с формой ввода пароля

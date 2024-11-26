@@ -13,6 +13,6 @@ def browser():
         gc_options.add_argument('--window-size=1550,1000')  # добавили ещё настройку
         driver = webdriver.Chrome(options=gc_options)
     else:
-        exit()
+        raise ValueError(f"Браузер не поддерживается, указан = '{browserName}', допустимые: firefox, chrome")
     yield driver
     driver.quit()

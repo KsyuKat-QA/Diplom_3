@@ -1,5 +1,5 @@
 from pages.base_page import BasePage
-from data import *
+from urls import *
 from locators.reset_page_locators import ResetPageLocators
 import allure
 
@@ -28,3 +28,7 @@ class ResetPage(BasePage):
     @allure.step('Нажали кнопку показать пароль')
     def show_pass(self):
         self.click_elem_with_wait(ResetPageLocators.SHOW_PASS)
+
+    @allure.step('Сравниваем активный элемент с формой ввода пароля')
+    def check_active_pass_input(self):
+        return self.check_active_element(ResetPageLocators.PASS_INPUT)
