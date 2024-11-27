@@ -35,10 +35,9 @@ class OrderPage(RootPage):
     @allure.step('Нажимаем крестик на форме заказа')
     def close_modal_order_id(self):
         i = 0
-        while self.get_elem_text(OrderPageLocators.MODAL_ORDER_ID_FROM_MAIN)=='9999': #пока не получим id заказа, не закрываем модальную форму
+        while self.get_elem_text(OrderPageLocators.MODAL_ORDER_ID_FROM_MAIN)=='9999' or i<20: #пока не получим id заказа, не закрываем модальную форму
             time.sleep(0.1)
             i =+ 1
-            if i == 20: break
         ord_id = self.get_elem_text(OrderPageLocators.MODAL_ORDER_ID_FROM_MAIN) #возвращаем id заказа
         self.click_elem_with_wait(OrderPageLocators.CLOSE_ORD_DONE) #крестик на форме заказа
         return ord_id
